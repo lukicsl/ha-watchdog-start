@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  watchdog-container:
+    image: mein_watchdog_image
+    privileged: true
+    volumes:
+      - /etc/watchdog.conf:/etc/watchdog.conf
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: ["/startup-script.sh"]
