@@ -24,12 +24,22 @@ trap cleanup SIGTERM
 sed -i "s|#file=.*|file=$WATCHDOG_FILE|" /host_etc/watchdog.conf
 sed -i "s|#change=.*|change=$WATCHDOG_CHANGE|" /host_etc/watchdog.conf
 
-# Command to restart watchdog service over SSH
-SSH_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST sudo systemctl restart watchdog"
+# Command to stop the watchdog service over SSH
+STOP_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST sudo systemctl stop watchdog"
 
-# Execute the command
-echo "Restarting watchdog service on the host..."
-$SSH_CMD
+# Command to start the watchdog service over SSH
+START_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST sudo systemctl start watchdog"
+
+# Execute the stop command
+echo "Stopping watchdog service on the host..."
+$STOP_CMD
+
+# Wait a bit to ensure the service has time to stop
+sleep 2
+
+# Execute the start command
+echo "Starting watchdog service on the host..."
+$START_CMD
 
 # Keep the container running
 tail -f /dev/null
