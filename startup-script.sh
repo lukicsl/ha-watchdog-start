@@ -10,16 +10,6 @@ fi
 HOST=$HOST_NAME 
 USER=$USER_NAME
 
-# Definiert die Cleanup-Funktion
-cleanup() {
-    echo "SIGTERM-Signal empfangen, rufe cleanup-script.sh auf..."
-    /cleanup-script.sh
-}
-
-# SIGTERM-Falle einrichten
-trap cleanup SIGINT
-trap cleanup SIGTERM
-
 # Ändern der /etc/watchdog.conf mit den Umgebungsvariablen
 sed -i "s|#file\s*=\s*.*|file=$WATCHDOG_FILE|" /host_etc/watchdog.conf
 sed -i "s|#change\s*=\s*.*|change=$WATCHDOG_CHANGE|" /host_etc/watchdog.conf
@@ -41,6 +31,10 @@ sleep 2
 echo "Starting watchdog service on the host..."
 $START_CMD
 
-# Keep the container running
-tail -f /dev/null
+# Sleeping in the background seems to do the job
+sleep infinity &
+wait $!
 
+# ADD YOUR CODE HERE
+echo "Received arbitrary signal"
+/cleanup-script.sh
