@@ -13,9 +13,19 @@ USER=$USER_NAME
 # Setzen Sie die ursprüngliche /etc/watchdog.conf zurück
 cp /etc/watchdog.conf.default /etc/watchdog.conf
 
-# Command to restart watchdog service over SSH
-SSH_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST sudo systemctl restart watchdog"
+# Command to stop the watchdog service over SSH
+STOP_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST sudo systemctl stop watchdog"
 
-# Execute the command
-echo "Restarting watchdog service on the host..."
-$SSH_CMD
+# Command to start the watchdog service over SSH
+START_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST sudo systemctl start watchdog"
+
+# Execute the stop command
+echo "Stopping watchdog service on the host..."
+$STOP_CMD
+
+# Wait a bit to ensure the service has time to stop
+sleep 2
+
+# Execute the start command
+echo "Starting watchdog service on the host..."
+$START_CMD
