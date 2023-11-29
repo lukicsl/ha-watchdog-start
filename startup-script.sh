@@ -25,7 +25,7 @@ sed -i "s|#file=.*|file=$WATCHDOG_FILE|" /host_etc/watchdog.conf
 sed -i "s|#change=.*|change=$WATCHDOG_CHANGE|" /host_etc/watchdog.conf
 
 # Command to restart watchdog service over SSH
-SSH_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST systemctl restart watchdog"
+SSH_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST sudo systemctl restart watchdog"
 
 # Execute the command
 echo "Restarting watchdog service on the host..."
