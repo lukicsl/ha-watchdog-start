@@ -20,7 +20,7 @@ RUN chmod +x /startup-script.sh
 RUN chmod +x /cleanup-script.sh
 
 # Set the entrypoint to the startup script
-ENTRYPOINT ["/startup-script.sh"]
+ENTRYPOINT ["/bin/bash", "/startup-script.sh"]
 
 # Handle the SIGTERM signal
 CMD ["/cleanup-script.sh"]
