@@ -17,8 +17,8 @@ cleanup() {
 }
 
 # SIGTERM-Falle einrichten
+trap cleanup SIGINT
 trap cleanup SIGTERM
-
 
 # Ändern der /etc/watchdog.conf mit den Umgebungsvariablen
 sed -i "s|#file\s*=\s*.*|file=$WATCHDOG_FILE|" /host_etc/watchdog.conf
