@@ -11,7 +11,7 @@ HOST=$HOST_NAME
 USER=$USER_NAME
 
 # Setzen Sie die ursprüngliche /etc/watchdog.conf zurück
-cp /etc/watchdog.conf.default /host_etc/watchdog.conf
+cp /host_etc/watchdog.conf.default /host_etc/watchdog.conf
 
 # Command to stop the watchdog service over SSH
 STOP_CMD="ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa $USER@$HOST sudo systemctl stop watchdog"
