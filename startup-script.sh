@@ -18,7 +18,7 @@ cleanup() {
 }
 
 # SIGTERM-Falle einrichten
-trap cleanup SIGTERM SIGINT
+trap cleanup SIGTERM SIGINT SIGKILL
 
 
 # Ändern der /etc/watchdog.conf mit den Umgebungsvariablen
